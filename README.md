@@ -84,7 +84,7 @@ Datamuse API: Word suggestions and synonyms for writing assistance.
 *page to find word synonyms*
 
 # Build Photos
-![Team](Add photo of your team here)
+![Team](./screenshots/me.jpg)
 
 
 ### Project Demo
@@ -92,13 +92,4 @@ Datamuse API: Word suggestions and synonyms for writing assistance.
 https://www.loom.com/share/80149df8bb0d40f5a7ea382c7aa70cf5?sid=c9785e15-a4d0-472c-83eb-1e92541a9b10
 demonstrates the working of the site
 
-# Additional Demos
-[Add any extra demo materials/links]
 
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
-
----
-Made with ❤️ at TinkerHub

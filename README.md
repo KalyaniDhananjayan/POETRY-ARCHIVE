@@ -46,7 +46,7 @@ Datamuse API: Used this API to provide word suggestions and synonyms, helping us
 git clone https://github.com/KalyaniDhananjayan/POETRY-ARCHIVE.git
 
 # Run
-run indexhtml and follow the buttons
+run index.html and follow the buttons
 
 ### Project Documentation
 Overview:

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        .image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px 0;
+            border-radius: 50%;
+            display: none;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: #313231;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #3a3a3a;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #313231;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <form id="editProfileForm">
+            <div class="form-group">
+                <label for="profileImage">Profile Picture:</label>
+                <input type="file" id="profileImage" accept="image/*">
+                <img id="profileImagePreview" class="image-preview">
+            </div>
+            <div class="form-group">
+                <label for="profileName">Name:</label>
+                <input type="text" id="profileName" required>
+            </div>
+            <div class="form-group">
+                <label for="profileBio">Bio:</label>
+                <textarea id="profileBio" required></textarea>
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+        <a href="index.html" class="back-link">← Back to Profile</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved profile data
+            const profilePhoto = localStorage.getItem('profilePhoto') || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg";
+            const profileName = localStorage.getItem('profileName') || "John Doe";
+            const profileBio = localStorage.getItem('profileBio') || "Welcome to my poetry profile! Here, I share my thoughts, creativity, and love for words. Feel free to explore my collection and leave your thoughts.";
+
+            // Set initial values
+            document.getElementById('profileImagePreview').src = profilePhoto;
+            document.getElementById('profileImagePreview').style.display = 'block';
+            document.getElementById('profileName').value = profileName;
+            document.getElementById('profileBio').value = profileBio;
+
+            // Handle form submission
+            document.getElementById('editProfileForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Save profile data to localStorage
+                const profileImageFile = document.getElementById('profileImage').files[0];
+                const profileName = document.getElementById('profileName').value;
+                const profileBio = document.getElementById('profileBio').value;
+
+                if (profileImageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        localStorage.setItem('profilePhoto', e.target.result);
+                        window.location.href = 'index.html'; // Redirect to main profile page
+                    };
+                    reader.readAsDataURL(profileImageFile);
+                } else {
+                    localStorage.setItem('profilePhoto', profilePhoto);
+                }
+
+                localStorage.setItem('profileName', profileName);
+                localStorage.setItem('profileBio', profileBio);
+
+                window.location.href = 'index.html'; // Redirect to main profile page
+            });
+
+            // Handle image preview
+            document.getElementById('profileImage').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const preview = document.getElementById('profileImagePreview');
+                    
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

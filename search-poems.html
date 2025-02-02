@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Poems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .search-form button {
+            background: #313231;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .search-form button:hover {
+            background: #3a3a3a;
+        }
+
+        .poems-container {
+            margin-top: 20px;
+        }
+
+        .poem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .poem-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .poem-author {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .poem-content {
+            white-space: pre-wrap;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #313231;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Poems</h1>
+        <div class="search-form">
+            <input type="text" id="searchInput" placeholder="Search by title, author, or keywords...">
+            <button onclick="searchPoems()">Search</button>
+        </div>
+        <div class="poems-container" id="poemsContainer"></div>
+        <a href="index.html" class="back-link">← Back to Profile</a>
+    </div>
+
+    <script>
+        async function searchPoems() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                alert('Please enter a search term.');
+                return;
+            }
+
+            const poemsContainer = document.getElementById('poemsContainer');
+            poemsContainer.innerHTML = '<p>Loading...</p>';
+
+            try {
+                // Try searching by title, author, and lines
+                const urls = [
+                    `https://poetrydb.org/title/${encodeURIComponent(query)}`,
+                    `https://poetrydb.org/author/${encodeURIComponent(query)}`,
+                    `https://poetrydb.org/lines/${encodeURIComponent(query)}`
+                ];
+
+                let data = [];
+                for (const url of urls) {
+                    const response = await fetch(url);
+                    const result = await response.json();
+                    if (Array.isArray(result)) {
+                        data = data.concat(result);
+                    }
+                }
+
+                // Remove duplicates
+                const uniquePoems = [];
+                const seenTitles = new Set();
+                data.forEach(poem => {
+                    if (!seenTitles.has(poem.title)) {
+                        seenTitles.add(poem.title);
+                        uniquePoems.push(poem);
+                    }
+                });
+
+                // Display the poems
+                poemsContainer.innerHTML = '';
+                if (uniquePoems.length === 0) {
+                    poemsContainer.innerHTML = '<p>No poems found. Try a different search term.</p>';
+                    return;
+                }
+
+                uniquePoems.forEach(poem => {
+                    const poemCard = document.createElement('div');
+                    poemCard.className = 'poem-card';
+                    poemCard.innerHTML = `
+                        <div class="poem-title">${poem.title}</div>
+                        <div class="poem-author">By ${poem.author}</div>
+                        <div class="poem-content">${poem.lines ? poem.lines.join('<br>') : 'No content available.'}</div>
+                    `;
+                    poemsContainer.appendChild(poemCard);
+                });
+            } catch (error) {
+                console.error('Error fetching poems:', error);
+                poemsContainer.innerHTML = '<p>Failed to fetch poems. Please try again later.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

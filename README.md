@@ -83,36 +83,14 @@ Datamuse API: Word suggestions and synonyms for writing assistance.
 ![Screenshot5](./screenshots/findsynonyms.png)
 *page to find word synonyms*
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
 # Build Photos
 ![Team](Add photo of your team here)
 
 
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+https://www.loom.com/share/80149df8bb0d40f5a7ea382c7aa70cf5?sid=c9785e15-a4d0-472c-83eb-1e92541a9b10
+demonstrates the working of the site
 
 # Additional Demos
 [Add any extra demo materials/links]
